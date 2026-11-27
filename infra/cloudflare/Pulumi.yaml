@@ -1,5 +1,5 @@
-name: react-cloudflare-template
-description: Cloudflare Pages project and optional custom domains
+name: yusur
+description: Cloudflare Pages project and custom domains for Yusur
 runtime:
   name: nodejs
   options:

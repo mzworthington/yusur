@@ -1,7 +1,9 @@
 .splash {
   position: relative;
   display: grid;
+  height: 100dvh;
   min-height: 100dvh;
+  max-height: 100dvh;
   place-items: center;
   overflow: hidden;
   background: #120014;
@@ -155,7 +157,7 @@
   max-width: 100%;
   flex-direction: column;
   align-items: center;
-  padding: 6rem 1rem;
+  padding: clamp(3.25rem, 16dvh, 6rem) 1rem;
   line-height: 0.82;
   text-align: center;
 }
@@ -168,7 +170,7 @@
 
 .splash-happy {
   font-family: 'Bungee', ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(3.4rem, 13vw, 8.5rem);
+  font-size: clamp(2.4rem, min(13vw, 22dvh), 8.5rem);
   font-weight: 400;
   letter-spacing: 0.04em;
   color: #fff;
@@ -183,7 +185,7 @@
 .splash-birth {
   margin-top: 0.15em;
   font-family: 'Monoton', ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(2.4rem, 10vw, 6.4rem);
+  font-size: clamp(1.7rem, min(10vw, 16dvh), 6.4rem);
   font-weight: 400;
   letter-spacing: 0.16em;
   text-indent: 0.16em;
@@ -198,7 +200,7 @@
 .splash-yusur {
   margin-top: 0.08em;
   font-family: 'Lilita One', ui-sans-serif, system-ui, sans-serif;
-  font-size: clamp(4.6rem, 20vw, 13rem);
+  font-size: clamp(3rem, min(20vw, 28dvh), 13rem);
   font-weight: 400;
   letter-spacing: 0.02em;
   background: linear-gradient(185deg, #fff7c2 10%, #ffb703 42%, #ff006e 100%);
