@@ -109,22 +109,22 @@ Push to `main` (or wait for the next CI run). Wrangler uploads `app/dist`.
 
 ## Where configuration lives
 
-| Concern                                        | Local                                         | CI                                         |
-| ---------------------------------------------- | --------------------------------------------- | ------------------------------------------ |
-| API token and Pulumi token                     | `.env` / Bitwarden                            | GitHub **secrets**                         |
-| Account id, zone id, zone name, hostnames      | `infra/cloudflare/hosting.yaml`               | Same committed file                        |
-| Pulumi API token                               | `infra/cloudflare/Pulumi.*.yaml` (gitignored) | `CLOUDFLARE_API_TOKEN` from GitHub secrets |
-| Public site origin in the SPA                  | `SITE_ORIGIN` via `init-project.sh`           | Built into the app bundle                  |
+| Concern                                   | Local                                         | CI                                         |
+| ----------------------------------------- | --------------------------------------------- | ------------------------------------------ |
+| API token and Pulumi token                | `.env` / Bitwarden                            | GitHub **secrets**                         |
+| Account id, zone id, zone name, hostnames | `infra/cloudflare/hosting.yaml`               | Same committed file                        |
+| Pulumi API token                          | `infra/cloudflare/Pulumi.*.yaml` (gitignored) | `CLOUDFLARE_API_TOKEN` from GitHub secrets |
+| Public site origin in the SPA             | `SITE_ORIGIN` via `init-project.sh`           | Built into the app bundle                  |
 
 ## Troubleshooting
 
-| Symptom                                             | Check                                                                                                                                                                                                |
-| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Zone missing or not active                          | Add the zone in Cloudflare and wait until it is **Active** before running bootstrap. This template does not configure nameservers.                                                                   |
-| Custom domain pending                               | DNS CNAME exists and is proxied (orange cloud); wait for SSL.                                                                                                                                        |
-| CI Pulumi fails on hostnames                        | Edit `infra/cloudflare/hosting.yaml` `pagesHostnames`.                                                                                                                                               |
-| Wrong site origin in HTML/meta                      | Re-run `bin/init-project.sh --origin https://… --force` and redeploy.                                                                                                                                |
-| Token denied                                        | Token needs Pages Edit + Zone Read + DNS Edit on the correct account/zone.                                                                                                                           |
+| Symptom                                             | Check                                                                                                                                          |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Zone missing or not active                          | Add the zone in Cloudflare and wait until it is **Active** before running bootstrap. This template does not configure nameservers.             |
+| Custom domain pending                               | DNS CNAME exists and is proxied (orange cloud); wait for SSL.                                                                                  |
+| CI Pulumi fails on hostnames                        | Edit `infra/cloudflare/hosting.yaml` `pagesHostnames`.                                                                                         |
+| Wrong site origin in HTML/meta                      | Re-run `bin/init-project.sh --origin https://… --force` and redeploy.                                                                          |
+| Token denied                                        | Token needs Pages Edit + Zone Read + DNS Edit on the correct account/zone.                                                                     |
 | Wrong zone in Pulumi (`zoneName` is another domain) | `hosting.yaml` `zoneId` does not match `zoneName`. The stack fails unless the live zone name is `zoneName` and every hostname is in that zone. |
 
 ## Related
