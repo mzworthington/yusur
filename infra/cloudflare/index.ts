@@ -1,27 +1,34 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
 import * as cloudflare from '@pulumi/cloudflare';
 import * as pulumi from '@pulumi/pulumi';
+
+import { loadHostingConfig } from './hostingConfig';
 
 const config = new pulumi.Config();
 const accountId = config.require('accountId');
 const zoneId = config.require('zoneId');
-const pagesProjectName = config.require('pagesProjectName');
+const hosting = loadHostingConfig(readFileSync(join(__dirname, 'hosting.yaml'), 'utf8'));
+const pagesProjectName = hosting.pagesProjectName;
 /** Zone RUM is shared; only enable when this stack owns the zone's analytics site. */
-const enableWebAnalytics = config.getBoolean('enableWebAnalytics') ?? false;
+const enableWebAnalytics = hosting.enableWebAnalytics;
+const pagesHostnames = hosting.pagesHostnames;
 
-/** Subdomain hostnames attached to the Pages project (existing zone assumed). */
-function resolvePagesHostnames(): string[] {
-  const listed = config.getObject<string[]>('pagesHostnames');
-  if (listed && listed.length > 0) return listed;
-  throw new Error('Set pagesHostnames to a JSON array of subdomains, e.g. ["app.example.com"]');
-}
-
-const pagesHostnames = resolvePagesHostnames();
-
-const pagesProject = new cloudflare.PagesProject('site', {
-  accountId,
-  name: pagesProjectName,
-  productionBranch: 'main',
-});
+// Wrangler `pages deploy` creates this project before the first stack update.
+// Import adopts it. ignoreChanges keeps that deploy's build settings.
+const pagesProject = new cloudflare.PagesProject(
+  'site',
+  {
+    accountId,
+    name: pagesProjectName,
+    productionBranch: 'main',
+  },
+  {
+    import: `${accountId}/${pagesProjectName}`,
+    ignoreChanges: ['buildConfig', 'deploymentConfigs', 'source'],
+  },
+);
 
 for (const hostname of pagesHostnames) {
   const safe = hostname.replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -49,10 +56,15 @@ for (const hostname of pagesHostnames) {
     { dependsOn: [dns] },
   );
 
-  new cloudflare.ObservatoryScheduledTest(`observatory-${safe}`, {
-    zoneId,
-    url: hostname,
-  });
+  // Speed API returns 500 when the hostname is not yet a record in the zone.
+  new cloudflare.ObservatoryScheduledTest(
+    `observatory-${safe}`,
+    {
+      zoneId,
+      url: hostname,
+    },
+    { dependsOn: [dns] },
+  );
 }
 
 const zone = cloudflare.getZoneOutput({ zoneId });
