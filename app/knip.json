@@ -1,0 +1,15 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "rules": {
+    "exports": "error",
+    "types": "error"
+  },
+  "entry": ["../bin/changelog-render.mjs", "lighthouserc.cjs"],
+  "project": ["src/**/*.{ts,tsx,css}", "scripts/**/*.mjs", "../bin/**/*.mjs"],
+  "ignoreDependencies": ["lint-staged"],
+  "ignoreExportsUsedInFile": {
+    "interface": true,
+    "type": true
+  },
+  "prettier": ["../.prettierrc"]
+}

@@ -1,0 +1,78 @@
+# Dependencies & package managers
+node_modules/
+.pnpm-store/
+
+# Builds & caches
+dist/
+dist-ssr/
+.vite/
+.turbo/
+.cache/
+*.tsbuildinfo
+.waykit/
+
+# Test / quality artifacts
+coverage/
+playwright-report/
+test-results/
+blob-report/
+lighthouse-report/
+.lighthouseci/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+credentials.json
+
+# Local overrides
+*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/mcp.json
+
+# Cloudflare / Wrangler
+.wrangler/
+
+# Pulumi (infra/cloudflare)
+infra/cloudflare/node_modules/
+infra/cloudflare/bin/
+infra/cloudflare/.pulumi/
+.pulumi/
+# Stack config may contain account IDs / encrypted secrets after bootstrap
+infra/cloudflare/Pulumi.*.yaml
+!infra/cloudflare/Pulumi.prod.yaml.example
+!infra/cloudflare/Pulumi.yaml
+.pnpm-store/
+
+# Antigravity workspace MCP (wk mcp --project / wk init)
+.agents/mcp_config.json
+
+# wk mcp backups of host MCP files
+**/*.bak.*
+# Waykit session MCP profile name (names only)
+.wk-mcp-profile.stamp
