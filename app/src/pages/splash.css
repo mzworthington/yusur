@@ -1,0 +1,293 @@
+.splash {
+  position: relative;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  overflow: hidden;
+  background: #120014;
+  color: #fff8e7;
+}
+
+.splash-sky {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 18% 22%, rgb(255 45 149 / 0.55), transparent 26%),
+    radial-gradient(circle at 82% 16%, rgb(124 58 237 / 0.65), transparent 30%),
+    radial-gradient(circle at 50% 108%, rgb(245 158 11 / 0.55), transparent 36%),
+    radial-gradient(circle at 72% 68%, rgb(34 211 238 / 0.28), transparent 22%),
+    linear-gradient(165deg, #1a0033 0%, #4c0519 48%, #3b0764 100%);
+  animation: splash-hue 14s linear infinite;
+}
+
+.splash-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150vmax;
+  height: 150vmax;
+  background: repeating-conic-gradient(
+    from 0deg,
+    transparent 0 7deg,
+    rgb(255 229 106 / 0.18) 7deg 9deg
+  );
+  transform: translate(-50%, -50%);
+  animation: splash-spin 36s linear infinite;
+}
+
+.splash-glow {
+  position: absolute;
+  width: 42vw;
+  height: 42vw;
+  border-radius: 999px;
+  filter: blur(8px);
+  mix-blend-mode: screen;
+  animation: splash-pulse 5s ease-in-out infinite;
+}
+
+.splash-glow-left {
+  top: 18%;
+  left: -8%;
+  background: radial-gradient(circle, rgb(255 77 141 / 0.7), transparent 68%);
+}
+
+.splash-glow-right {
+  right: -10%;
+  bottom: 8%;
+  background: radial-gradient(circle, rgb(103 232 249 / 0.45), transparent 68%);
+  animation-delay: -2s;
+}
+
+.splash-balloon {
+  position: absolute;
+  bottom: -20%;
+  border-radius: 50% 50% 48% 48%;
+  box-shadow:
+    inset -12px -16px 0 rgb(0 0 0 / 0.12),
+    inset 10px 12px 0 rgb(255 255 255 / 0.35),
+    0 18px 30px rgb(0 0 0 / 0.25);
+  animation-name: splash-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.splash-balloon::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 2px;
+  height: 4.5rem;
+  background: linear-gradient(#fff, transparent);
+  transform: translateX(-50%);
+}
+
+.splash-confetti {
+  position: absolute;
+  top: -8%;
+  animation-name: splash-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.splash-confetti-rect {
+  width: 0.7rem;
+  height: 1.15rem;
+  border-radius: 2px;
+}
+
+.splash-confetti-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+}
+
+.splash-confetti-slash {
+  width: 0.18rem;
+  height: 1.4rem;
+  border-radius: 999px;
+}
+
+.splash-ribbon {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  width: 140%;
+  overflow: hidden;
+  background: #ffe56a;
+  color: #4c0519;
+  font-family: 'Bungee', ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(0.85rem, 2vw, 1.15rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.splash-ribbon span {
+  padding: 0.45rem 0;
+  animation: splash-marquee 16s linear infinite;
+}
+
+.splash-ribbon-top {
+  top: 7%;
+  left: -20%;
+  transform: rotate(-3.5deg);
+  box-shadow: 0 10px 0 #ff2d95;
+}
+
+.splash-ribbon-bottom {
+  bottom: 6%;
+  left: -20%;
+  transform: rotate(2.5deg);
+  background: #ff2d95;
+  color: #fff;
+  box-shadow: 0 10px 0 #67e8f9;
+}
+
+.splash-ribbon-bottom span {
+  animation-direction: reverse;
+}
+
+.splash-title {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  max-width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 6rem 1rem;
+  line-height: 0.82;
+  text-align: center;
+}
+
+.splash-happy,
+.splash-birth,
+.splash-yusur {
+  display: block;
+}
+
+.splash-happy {
+  font-family: 'Bungee', ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(3.4rem, 13vw, 8.5rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow:
+    0 0 12px #ff4d8d,
+    0 0 36px #ff2d95,
+    0.08em 0.08em 0 #7c3aed;
+  transform: rotate(-7deg);
+  animation: splash-pop 2.6s ease-in-out infinite;
+}
+
+.splash-birth {
+  margin-top: 0.15em;
+  font-family: 'Monoton', ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2.4rem, 10vw, 6.4rem);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-indent: 0.16em;
+  background: linear-gradient(90deg, #ffe56a, #fff, #ff4d8d, #67e8f9, #ffe56a);
+  background-size: 280% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: splash-shimmer 3.2s linear infinite;
+}
+
+.splash-yusur {
+  margin-top: 0.08em;
+  font-family: 'Lilita One', ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(4.6rem, 20vw, 13rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  background: linear-gradient(185deg, #fff7c2 10%, #ffb703 42%, #ff006e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0.08em 0 #4c0519) drop-shadow(0 0 1.4rem rgb(255 77 141 / 0.85));
+  animation: splash-wobble 3.4s ease-in-out infinite;
+}
+
+@keyframes splash-hue {
+  to {
+    filter: hue-rotate(35deg);
+  }
+}
+
+@keyframes splash-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(1turn);
+  }
+}
+
+@keyframes splash-pulse {
+  50% {
+    transform: scale(1.12);
+    opacity: 0.75;
+  }
+}
+
+@keyframes splash-float {
+  0% {
+    transform: translateY(10vh) rotate(-4deg);
+  }
+  50% {
+    transform: translateY(-78vh) rotate(6deg);
+  }
+  100% {
+    transform: translateY(-120vh) rotate(-4deg);
+  }
+}
+
+@keyframes splash-fall {
+  0% {
+    top: -10%;
+    opacity: 1;
+  }
+  100% {
+    top: 110%;
+    opacity: 0.85;
+  }
+}
+
+@keyframes splash-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes splash-pop {
+  50% {
+    transform: rotate(-4deg) scale(1.05);
+  }
+}
+
+@keyframes splash-shimmer {
+  to {
+    background-position: 280% 0;
+  }
+}
+
+@keyframes splash-wobble {
+  50% {
+    transform: rotate(2deg) scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-sky,
+  .splash-burst,
+  .splash-glow,
+  .splash-balloon,
+  .splash-confetti,
+  .splash-ribbon span,
+  .splash-happy,
+  .splash-birth,
+  .splash-yusur {
+    animation: none;
+  }
+}
