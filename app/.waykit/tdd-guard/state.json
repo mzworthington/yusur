@@ -1,6 +1,6 @@
 {
   "disabled": false,
   "lastTestOutcome": "pass",
-  "lastTestCommand": "pnpm test && pnpm typecheck && pnpm knip",
-  "lastTestAt": "2026-11-27T13:12:13.723Z"
+  "lastTestCommand": "pnpm exec vitest run src/test/shareCard.test.ts",
+  "lastTestAt": "2026-11-27T13:46:36.059Z"
 }
