@@ -4,7 +4,7 @@ Pages project + custom **subdomain** hostnames on an existing active zone, plus 
 
 Zone-level Web Analytics is **opt-in** (`enableWebAnalytics`, default `false`) so clones on a shared apex do not create a second RUM site. When this stack owns the zone, set it true (`autoInstall` + `enabled`). Shared-apex forks rely on the zone-owner site.
 
-Real zone/hostname values live in gitignored `Pulumi.<stack>.yaml`, local `.env`, or GitHub Actions vars; see [Custom domains](../../docs/custom-domains.md) and [secrets checklist](../../docs/cloudflare-secrets.md).
+Account id, zone id, zone name, and hostnames are committed in `hosting.yaml`. The API token and Pulumi access token stay GitHub secrets. See [Custom domains](../../docs/custom-domains.md) and [secrets checklist](../../docs/cloudflare-secrets.md).
 
 | Resource | Purpose |
 |----------|---------|

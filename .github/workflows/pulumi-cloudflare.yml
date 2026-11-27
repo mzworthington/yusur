@@ -4,11 +4,11 @@ name: Pulumi Cloudflare
 # See: https://github.com/mzworthington/edge-dns/blob/main/docs/reusable-cloudflare-ci.md
 #
 # Create GitHub Environment "pulumi-prod" with required reviewers for the apply gate.
-# Secrets: CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_ZONE_ID, CLOUDFLARE_API_TOKEN, PULUMI_ACCESS_TOKEN
-# Pages project name and hostnames: infra/cloudflare/hosting.yaml
+# Secrets: CLOUDFLARE_API_TOKEN, PULUMI_ACCESS_TOKEN
+# Account id, zone id, and zone name: infra/cloudflare/hosting.yaml
 #
 # Dependabot/fork PRs do not receive Actions secrets; edge-dns skips preview then.
-# Optional: mirror the four secrets as Dependabot secrets for real previews.
+# Optional: mirror the API token and Pulumi access token as Dependabot secrets for real previews.
 
 on:
   pull_request:

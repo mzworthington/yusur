@@ -3,7 +3,7 @@ import { join } from 'node:path';
 
 import * as cloudflare from '@pulumi/cloudflare';
 
-import { loadHostingConfig } from './hostingConfig';
+import { assertSiteZone, loadHostingConfig } from './hostingConfig';
 
 const hosting = loadHostingConfig(readFileSync(join(__dirname, 'hosting.yaml'), 'utf8'));
 const accountId = hosting.accountId;
@@ -83,7 +83,10 @@ const webAnalytics = enableWebAnalytics
 export const pagesProjectNameOut = pagesProject.name;
 export const pagesSubdomain = pagesProject.subdomain;
 export const pagesHostnamesOut = pagesHostnames;
-export const zoneName = zone.name;
+export const zoneName = zone.name.apply((name) => {
+  assertSiteZone(name, hosting.zoneName, pagesHostnames);
+  return name;
+});
 /** Present only when `enableWebAnalytics` is true. */
 export const webAnalyticsSiteTag = webAnalytics?.siteTag ?? null;
 export const webAnalyticsSiteToken = webAnalytics?.siteToken ?? null;

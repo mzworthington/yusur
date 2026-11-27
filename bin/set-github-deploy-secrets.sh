@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Push the GitHub Actions secrets CI uses to deploy Pages.
-# Pages project name and hostnames live in infra/cloudflare/hosting.yaml and wrangler.toml.
+# Account id, zone id, and zone name are committed in infra/cloudflare/hosting.yaml.
+# Pages project name and hostnames live there too. Wrangler reads the project name from wrangler.toml.
+# This script sets CLOUDFLARE_API_TOKEN and PULUMI_ACCESS_TOKEN only.
 # Matching environment variables are used as-is. Missing ones are prompted.
 set -euo pipefail
 
@@ -46,13 +48,9 @@ ensure_value() {
 }
 
 ensure_value CLOUDFLARE_API_TOKEN secret
-ensure_value CLOUDFLARE_ACCOUNT_ID secret
-ensure_value CLOUDFLARE_ZONE_ID secret
 ensure_value PULUMI_ACCESS_TOKEN secret
 
 echo "→ Setting GitHub deploy secrets"
 printf '%s' "$CLOUDFLARE_API_TOKEN" | gh secret set CLOUDFLARE_API_TOKEN
-printf '%s' "$CLOUDFLARE_ACCOUNT_ID" | gh secret set CLOUDFLARE_ACCOUNT_ID
-printf '%s' "$CLOUDFLARE_ZONE_ID" | gh secret set CLOUDFLARE_ZONE_ID
 printf '%s' "$PULUMI_ACCESS_TOKEN" | gh secret set PULUMI_ACCESS_TOKEN
-echo "✓ Cloudflare and Pulumi deploy secrets are set"
+echo "✓ Cloudflare API token and Pulumi access token are set"
