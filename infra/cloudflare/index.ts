@@ -53,7 +53,10 @@ for (const hostname of pagesHostnames) {
       projectName: pagesProject.name,
       name: hostname,
     },
-    { dependsOn: [dns] },
+    {
+      dependsOn: [dns],
+      import: `${accountId}/${pagesProjectName}/${hostname}`,
+    },
   );
 
   // Speed API returns 500 when the hostname is not yet a record in the zone.

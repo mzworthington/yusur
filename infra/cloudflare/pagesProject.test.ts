@@ -9,6 +9,10 @@ test('adopts the Pages project Wrangler already created and schedules Observator
   assert.match(source, /ignoreChanges: \['buildConfig', 'deploymentConfigs', 'source'\]/);
   assert.match(
     source,
+    /new cloudflare\.PagesDomain\([\s\S]*?import: `\$\{accountId\}\/\$\{pagesProjectName\}\/\$\{hostname\}`/,
+  );
+  assert.match(
+    source,
     /new cloudflare\.ObservatoryScheduledTest\([\s\S]*?\{\s*dependsOn: \[dns\]\s*\}/,
   );
 });
