@@ -1,5 +1,3 @@
-config:
-  # Secrets only. bin/setup-cloudflare-hosting.sh writes the gitignored Pulumi.<stack>.yaml.
-  # Pages project name and hostnames are committed in hosting.yaml.
-  yusur:accountId: YOUR_CLOUDFLARE_ACCOUNT_ID
-  yusur:zoneId: YOUR_CLOUDFLARE_ZONE_ID
+# Account id, zone id, and zone name are committed in hosting.yaml.
+# CLOUDFLARE_API_TOKEN stays a GitHub secret and is not written here.
+config: {}

@@ -4,6 +4,25 @@ export interface HostingConfig {
   enableWebAnalytics: boolean;
   accountId: string;
   zoneId: string;
+  zoneName: string;
+}
+
+const HEX_ID = /^[a-f0-9]{32}$/;
+
+/** Fail the stack when the live zone is not this site's zone. */
+export function assertSiteZone(
+  zoneName: string,
+  expectedZoneName: string,
+  hostnames: string[],
+): void {
+  if (zoneName !== expectedZoneName) {
+    throw new Error(`Cloudflare zone name is ${zoneName}; this site's zone is ${expectedZoneName}`);
+  }
+  for (const host of hostnames) {
+    if (host !== zoneName && !host.endsWith(`.${zoneName}`)) {
+      throw new Error(`Hostname ${host} is not in zone ${zoneName}`);
+    }
+  }
 }
 
 /** Pages identity plus the Cloudflare account and zone. Tokens stay in the secret store. */
@@ -13,6 +32,7 @@ export function loadHostingConfig(source: string): HostingConfig {
   let enableWebAnalytics: boolean | undefined;
   let accountId = '';
   let zoneId = '';
+  let zoneName = '';
   let inHostnames = false;
 
   for (const raw of source.split(/\r?\n/)) {
@@ -39,6 +59,8 @@ export function loadHostingConfig(source: string): HostingConfig {
       accountId = value;
     } else if (key === 'zoneId') {
       zoneId = value;
+    } else if (key === 'zoneName') {
+      zoneName = value;
     } else if (key === 'enableWebAnalytics') {
       if (value !== 'true' && value !== 'false') {
         throw new Error('enableWebAnalytics must be true or false');
@@ -54,10 +76,15 @@ export function loadHostingConfig(source: string): HostingConfig {
   if (enableWebAnalytics === undefined) {
     throw new Error('hosting.yaml enableWebAnalytics is required');
   }
-  if (accountId === '') throw new Error('hosting.yaml accountId is required');
-  if (zoneId === '') throw new Error('hosting.yaml zoneId is required');
+  if (!HEX_ID.test(accountId)) {
+    throw new Error('hosting.yaml accountId must be a 32-character hex id');
+  }
+  if (!HEX_ID.test(zoneId)) {
+    throw new Error('hosting.yaml zoneId must be a 32-character hex id');
+  }
+  if (zoneName === '') throw new Error('hosting.yaml zoneName is required');
 
-  return { pagesProjectName, pagesHostnames, enableWebAnalytics, accountId, zoneId };
+  return { pagesProjectName, pagesHostnames, enableWebAnalytics, accountId, zoneId, zoneName };
 }
 
 function unquote(value: string): string {

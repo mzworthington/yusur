@@ -4,14 +4,14 @@ Pages project + custom **subdomain** hostnames on an existing active zone, plus 
 
 Zone-level Web Analytics is **opt-in** (`enableWebAnalytics`, default `false`) so clones on a shared apex do not create a second RUM site. When this stack owns the zone, set it true (`autoInstall` + `enabled`). Shared-apex forks rely on the zone-owner site.
 
-Real zone/hostname values live in gitignored `Pulumi.<stack>.yaml`, local `.env`, or GitHub Actions vars; see [Custom domains](../../docs/custom-domains.md) and [secrets checklist](../../docs/cloudflare-secrets.md).
+Account id, zone id, zone name, and hostnames are committed in `hosting.yaml`. The API token and Pulumi access token stay GitHub secrets. See [Custom domains](../../docs/custom-domains.md) and [secrets checklist](../../docs/cloudflare-secrets.md).
 
-| Resource | Purpose |
-|----------|---------|
-| `PagesProject` | Direct-upload Pages project |
-| `DnsRecord` / `PagesDomain` | Proxied CNAME + hostname binding per `pagesHostnames` entry |
-| `WebAnalyticsSite` | Zone RUM site - opt-in via `enableWebAnalytics` (default off on shared zones) |
-| `ObservatoryScheduledTest` | Synthetic Speed test per Pages hostname |
+| Resource                    | Purpose                                                                       |
+| --------------------------- | ----------------------------------------------------------------------------- |
+| `PagesProject`              | Direct-upload Pages project                                                   |
+| `DnsRecord` / `PagesDomain` | Proxied CNAME + hostname binding per `pagesHostnames` entry                   |
+| `WebAnalyticsSite`          | Zone RUM site - opt-in via `enableWebAnalytics` (default off on shared zones) |
+| `ObservatoryScheduledTest`  | Synthetic Speed test per Pages hostname                                       |
 
 If Web Analytics or Observatory was enabled in the dashboard first, import before `pulumi up`:
 
@@ -35,9 +35,9 @@ Or merge to `main`. `.github/workflows/pulumi-cloudflare.yml` is a thin caller o
 
 ## Related
 
-| Path                       | Purpose                                   |
-| -------------------------- | ----------------------------------------- |
-| `wrangler.toml`            | Pages project name + `app/dist` output    |
-| `app/public/_redirects`    | SPA routing                               |
-| `.github/workflows/ci.yml` | Build + wrangler deploy                   |
-| `bin/setup-cloudflare-hosting.sh` | Thin shim → edge-dns bootstrap     |
+| Path                              | Purpose                                |
+| --------------------------------- | -------------------------------------- |
+| `wrangler.toml`                   | Pages project name + `app/dist` output |
+| `app/public/_redirects`           | SPA routing                            |
+| `.github/workflows/ci.yml`        | Build + wrangler deploy                |
+| `bin/setup-cloudflare-hosting.sh` | Thin shim → edge-dns bootstrap         |
